@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT & Robotics Integration | RoboLearn</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;       /* Main brand color */
+      --primary-dark: #3a56d4;  /* Darker shade of primary */
+      --secondary: #6c757d;     /* Secondary text color */
+      --accent: #4cc9f0;        /* Accent color for highlights */
+      --dark: #0f172a;          /* Dark text color */
+      --light: #f8f9fa;         /* Light background color */
+      
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      --glass: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      --shadow-hover: 0 15px 30px rgba(67, 97, 238, 0.3);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      background-color: #f9f9f9;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Course Hero Section */
+    .course-hero {
+      background: var(--gradient);
+      color: white;
+      padding: 5rem 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .course-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1518770660439-4636190af475') center/cover no-repeat;
+      opacity: 0.1;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .course-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .course-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .course-meta {
+      display: flex;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .meta-item i {
+      color: var(--accent);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn-enroll {
+      background: white;
+      color: var(--primary);
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-enroll:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* IoT Feature Cards */
+    .iot-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      height: 100%;
+      border-top: 4px solid var(--accent);
+    }
+
+    .iot-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .iot-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .iot-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    /* Protocol Comparison */
+    .protocol-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+    }
+
+    .protocol-table th {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem;
+      text-align: left;
+    }
+
+    .protocol-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .protocol-table tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    /* Project Showcase */
+    .project-showcase {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .project-image {
+      width: 100%;
+      height: auto;
+    }
+
+    .project-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 2rem;
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .course-title {
+        font-size: 2.2rem;
+      }
+      .course-meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .hero-cta {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Course Hero Section -->
+  <section class="course-hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="course-badge">Intermediate Level</span>
+        <h1 class="course-title">IoT & Robotics Integration</h1>
+        <p class="lead">Learn how to connect your robots to the internet and control them remotely. Explore smart automation concepts.</p>
+        
+        <div class="course-meta">
+          <div class="meta-item">
+            <i class="fas fa-clock"></i>
+            <span>6 Weeks</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-video"></i>
+            <span>32 Lectures</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-project-diagram"></i>
+            <span>5 Hands-on Projects</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-certificate"></i>
+            <span>Certificate of Completion</span>
+          </div>
+        </div>
+            <div class="hero-cta">
+          <a href="enroll.html" class="btn-enroll">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Course Content -->
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2 class="mb-4">Course Description</h2>
+        <p>This course bridges the gap between robotics and the Internet of Things, teaching you how to create connected robotic systems that can be monitored and controlled remotely. You'll learn to integrate various IoT protocols and platforms with robotic systems to enable smart automation.</p>
+        
+        <p>Through practical projects, you'll gain experience with cloud connectivity, remote monitoring, data collection, and autonomous decision-making based on IoT data. By the end, you'll be able to build robots that participate in larger smart ecosystems.</p>
+        
+        <h2 class="mt-5 mb-4">Key IoT Concepts</h2>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="iot-card">
+              <div class="iot-icon">
+                <i class="fas fa-cloud"></i>
+              </div>
+              <h3 class="iot-title">Cloud Connectivity</h3>
+              <p>Connect your robots to cloud platforms like AWS IoT, Google Cloud IoT, and Azure IoT Hub for remote management and data analytics.</p>
+              <ul>
+                <li>MQTT protocol implementation</li>
+                <li>Device provisioning</li>
+                <li>Secure communication</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="iot-card">
+              <div class="iot-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <h3 class="iot-title">Remote Control</h3>
+              <p>Build mobile and web interfaces to control your robots from anywhere in the world with real-time feedback.</p>
+              <ul>
+                <li>WebSocket communication</li>
+                <li>Mobile app integration</li>
+                <li>Latency optimization</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="iot-card">
+              <div class="iot-icon">
+                <i class="fas fa-database"></i>
+              </div>
+              <h3 class="iot-title">Data Collection</h3>
+              <p>Implement data logging from robot sensors and analyze performance trends over time.</p>
+              <ul>
+                <li>Time-series databases</li>
+                <li>Data visualization</li>
+                <li>Predictive maintenance</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="iot-card">
+              <div class="iot-icon">
+                <i class="fas fa-robot"></i>
+              </div>
+              <h3 class="iot-title">Autonomous Decisions</h3>
+              <p>Enable your robots to make intelligent decisions based on IoT data from other devices in the network.</p>
+              <ul>
+                <li>Edge computing</li>
+                <li>Rule-based automation</li>
+                <li>Machine learning integration</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <h2 class="mt-5 mb-4">IoT Protocol Comparison</h2>
+        <table class="protocol-table">
+          <thead>
+            <tr>
+              <th>Protocol</th>
+              <th>Best For</th>
+              <th>Power Use</th>
+              <th>Range</th>
+              <th>Data Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Wi-Fi</td>
+              <td>High bandwidth applications</td>
+              <td>High</td>
+              <td>Medium</td>
+              <td>High</td>
+            </tr>
+            <tr>
+              <td>Bluetooth</td>
+              <td>Short-range device control</td>
+              <td>Low</td>
+              <td>Short</td>
+              <td>Medium</td>
+            </tr>
+            <tr>
+              <td>LoRaWAN</td>
+              <td>Long-range sensor networks</td>
+              <td>Very Low</td>
+              <td>Long</td>
+              <td>Low</td>
+            </tr>
+            <tr>
+              <td>Zigbee</td>
+              <td>Mesh networks</td>
+              <td>Low</td>
+              <td>Medium</td>
+              <td>Low</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <h2 class="mt-5 mb-4">Featured Project</h2>
+        <div class="project-showcase">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" alt="IoT Robot" class="project-image">
+          <div class="project-overlay">
+            <h3>Smart Warehouse Robot</h3>
+            <p>This student project demonstrates a robot that receives inventory data from the cloud and autonomously navigates to collect items, updating stock levels in real-time.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm sticky-top" style="top: 20px;">
+          <div class="card-header text-white" style="background-color: var(--primary);">
+            <h4 class="mb-0">Course Enrollment</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Price:</h5>
+              <span class="h4" style="color: var(--primary);">₹2,999</span>
+            </div>
+            <div class="d-grid gap-2">
+                 <a href="enroll.html" class="btn btn-primary btn-lg py-3 text-decoration-none">
+                  <i class="fas fa-shopping-cart me-2"></i> Enroll Now
+                </a>
+            </div>
+            <hr>
+            <h5>Course Includes:</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 32 video lessons</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 5 hands-on projects</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Sample IoT code</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Cloud service setup guides</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Certificate of completion</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Q&A support</li>
+            </ul>
+            <hr>
+            <h5>Requirements:</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-microchip text-info me-2"></i> Raspberry Pi or Arduino with WiFi</li>
+              <li class="mb-2"><i class="fas fa-wifi text-info me-2"></i> IoT modules (ESP8266/ESP32)</li>
+              <li class="mb-2"><i class="fas fa-robot text-info me-2"></i> Basic robotics kit</li>
+              <li class="mb-2"><i class="fas fa-laptop text-info me-2"></i> Computer with Python</li>
+              <li class="mb-2"><i class="fas fa-cloud text-info me-2"></i> Free-tier cloud account</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="card shadow-sm mt-4">
+          <div class="card-header text-white" style="background-color: var(--accent);">
+            <h4 class="mb-0">Recommended Hardware</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <img src="https://m.media-amazon.com/images/I/61+Q6Rh5KVL._AC_UF1000,1000_QL80_.jpg" alt="ESP32" class="rounded me-3" width="60">
+              <div>
+                <h6 class="mb-0">ESP32 Development Kit</h6>
+                <small>$12.99</small>
+              </div>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+              <img src="https://m.media-amazon.com/images/I/61lY5J6yAbL._AC_UF1000,1000_QL80_.jpg" alt="Raspberry Pi" class="rounded me-3" width="60">
+              <div>
+                <h6 class="mb-0">Raspberry Pi 4 Starter Kit</h6>
+                <small>$89.99</small>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <img src="https://m.media-amazon.com/images/I/71fXj2j2sYL._AC_UF1000,1000_QL80_.jpg" alt="Robotics Kit" class="rounded me-3" width="60">
+              <div>
+                <h6 class="mb-0">Advanced Robotics Kit</h6>
+                <small>$59.99</small>
+              </div>
+            </div>
+            <button class="btn w-100 mt-3 text-white" style="background-color: var(--accent);">
+              <i class="fas fa-shopping-basket me-2"></i> View All Recommendations
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real-world Applications -->
+  <div class="bg-light py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Industry Applications</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <img src="images\Smart Factories.jpeg" class="card-img-top" alt="Smart Factory">
+            <div class="card-body">
+              <h5 class="card-title">Smart Factories</h5>
+              <p class="card-text">Connected robots that communicate with production systems and adapt to changing demands in real-time.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <img src="images\Precision Agriculture.jpg" class="card-img-top" alt="Precision Agriculture">
+            <div class="card-body">
+              <h5 class="card-title">Precision Agriculture</h5>
+              <p class="card-text">Farm robots that receive weather data and soil conditions to optimize planting and harvesting.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <img src="images\Smart Cities.jpg" class="card-img-top" alt="Smart Cities">
+            <div class="card-body">
+              <h5 class="card-title">Smart Cities</h5>
+              <p class="card-text">Municipal robots that respond to sensor networks for maintenance and public services.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instructor Section -->
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-md-3 text-center">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Instructor" class="rounded-circle img-thumbnail mb-3" width="150">
+        <div class="d-flex justify-content-center gap-3">
+          <a href="#" class="text-dark"><i class="fab fa-linkedin fa-lg"></i></a>
+          <a href="#" class="text-dark"><i class="fab fa-github fa-lg"></i></a>
+          <a href="#" class="text-dark"><i class="fab fa-twitter fa-lg"></i></a>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <h2>About Your Instructor</h2>
+        <h4 style="color: var(--primary);">Dr. Raj Patel</h4>
+        <p class="text-muted">IoT Systems Architect | 15+ Years Experience</p>
+        <p>Dr. Patel has designed industrial IoT solutions for Fortune 500 companies and holds several patents in wireless communication protocols. He led the development of Amazon's warehouse robotics communication system and now focuses on educating the next generation of IoT engineers.</p>
+        <p>His teaching approach combines practical implementation with architectural best practices, emphasizing scalable and secure IoT solutions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final CTA -->
+  <div class="py-5 text-white" style="background-color: var(--primary);">
+    <div class="container text-center">
+      <h2 class="mb-4">Ready to Build the Future of Connected Robotics?</h2>
+      <p class="lead mb-4">Join thousands of students mastering IoT robotics integration.</p>
+      <a href="enroll.html" class="btn btn-light btn-lg px-5">
+        <i class="fas fa-robot me-2"></i> Enroll Now
+      </a>
+    </div>
+  </div>
+   <!-- Footer -->
+  <footer class="bg-dark text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <h5 class="mb-4">RoboLearn</h5>
+          <p>Making robotics education accessible to everyone through high-quality, project-based courses.</p>
+          <div class="d-flex gap-3 mt-4">
+            <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-4">Courses</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white-50">Arduino Robotics</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Raspberry Pi</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Drone Programming</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">AI for Robotics</a></li>
+            <li><a href="#" class="text-white-50">All Courses</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-4">Resources</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white-50">Blog</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Tutorials</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Projects</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Community</a></li>
+            <li><a href="#" class="text-white-50">Support</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-4">Company</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white-50">About Us</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Careers</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Instructors</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Contact</a></li>
+            <li><a href="#" class="text-white-50">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <h5 class="mb-4">Contact</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><i class="fas fa-envelope me-2"></i> hello@robolearn.com</li>
+            <li class="mb-2"><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
+            <li><i class="fas fa-map-marker-alt me-2"></i> San Francisco, CA</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4 bg-secondary">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start">
+          <small class="text-white-50">© 2024 RoboLearn. All rights reserved.</small>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <small class="text-white-50">Made with <i class="fas fa-heart text-danger"></i> for robotics enthusiasts</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

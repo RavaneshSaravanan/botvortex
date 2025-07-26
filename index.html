@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BotVortex Robotics Education – Next-Gen Learning Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #6c757d;
+            --accent-color: #00d1b2;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color-light: #f8fafc;
+            --text-color-dark: #1e293b;
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #00d1b2 100%);
+            --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --star-color: #f59e0b;
+            --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --box-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color-dark);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Modern Glass Morphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--box-shadow);
+        }
+
+        /* Futuristic Navbar */
+        .navbar {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(37, 99, 235, 0.95) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--text-color-light) !important;
+        }
+
+        .navbar.scrolled .navbar-brand {
+            color: var(--text-color-light) !important;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            margin: 0 10px;
+            padding: 8px 15px !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-link i {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .nav-link:hover i {
+            transform: translateY(-2px);
+        }
+
+        .navbar.scrolled .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color) !important;
+            font-weight: 600;
+        }
+
+        .navbar.scrolled .nav-link.active {
+            color: var(--text-color-light) !important;
+            background: rgba(255, 255, 255, 0.2);
+        }
+         /* Profile Dropdown */
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px !important;
+        }
+
+        .dropdown-toggle::after {
+            margin-left: 8px;
+        }
+
+        .profile-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 2px solid rgba(37, 99, 235, 0.3);
+        }
+
+        .navbar.scrolled .profile-img {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .dropdown-menu {
+            border-radius: 8px;
+            border: none;
+            box-shadow: var(--box-shadow);
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 8px 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .dropdown-divider {
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Hero Section with Particle Background */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient-dark);
+            color: var(--text-color-light);
+            padding: 120px 0;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            background: linear-gradient(to right, #fff 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p.lead {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        .btn-primary-gradient {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary-gradient:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-primary-gradient::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-gradient:hover::after {
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
+        }
+
+        .btn-outline-light {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            background: transparent;
+        }
+
+        .btn-outline-light:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Feature Cards with Hover 3D Effect */
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--box-shadow);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) perspective(1000px) rotateX(5deg);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .feature-card:hover::before {
+            height: 10px;
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .feature-card h4 {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .feature-card p {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        /* Section Headings */
+        .section-heading {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-heading h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-heading h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .section-heading p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+        }
+
+        /* Course Cards with Flip Effect */
+        .course-card-container {
+            perspective: 1000px;
+            height: 100%;
+        }
+
+        .course-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 16px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .course-card-container:hover .course-card {
+            transform: rotateY(180deg);
+        }
+
+        .course-card-front, .course-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .course-card-front {
+            background: white;
+        }
+
+        .course-card-back {
+            background: var(--gradient-primary);
+            color: white;
+            transform: rotateY(180deg);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .course-card-body {
+            padding: 25px;
+        }
+
+        .course-card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .course-card-text {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .badge-level {
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .course-card-back h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .course-card-back ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .course-card-back ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .course-card-back ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .btn-outline-white {
+            border: 2px solid white;
+            color: white;
+            background: transparent;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-white:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Roadmap Timeline */
+        .roadmap-timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .roadmap-timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--gradient-primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -12px;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-content ul li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .timeline-content ul li::before {
+            content: '\f054';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 0.8rem;
+        }
+
+        /* Reviews Section */
+        .review-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card::before {
+            content: '\f10d';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 5rem;
+            color: rgba(37, 99, 235, 0.05);
+            z-index: 0;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .stars {
+            color: var(--star-color);
+            margin-bottom: 15px;
+        }
+
+        .review-text {
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            border: 3px solid var(--accent-color);
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h5 {
+            margin: 0;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .author-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1518770660439-4636190af475') center/cover no-repeat;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-content p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-bg);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: white;
+        }
+
+        .footer-logo i {
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+
+        .footer-about p {
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h5 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links ul li a i {
+            margin-right: 10px;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+        }
+
+        .footer-links ul li a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            margin-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p.lead {
+                font-size: 1.2rem;
+            }
+            
+            .roadmap-timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .left::after, .right::after {
+                left: 18px;
+            }
+            
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Futuristic Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-robot"></i>BotVortex
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">
+                        <i class="fas fa-lightbulb"></i> Features
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#courses">
+                        <i class="fas fa-graduation-cap"></i> Courses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#roadmap">
+                        <i class="fas fa-map-marked-alt"></i> Roadmap
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#reviews">
+                        <i class="fas fa-comments"></i> Reviews
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">
+                        <i class="fas fa-envelope"></i> Contact
+                    </a>
+                </li>
+                 <li class="nav-item dropdown ms-lg-3">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="profile-img" alt="Profile">
+                        <span class="d-none d-lg-inline">John D.</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> My Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-book"></i> My Courses</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section with Particles -->
+<section class="hero" id="home">
+    <div id="particles-js"></div>
+    <div class="hero-content">
+        <h1>Revolutionizing Robotics Education</h1>
+        <p class="lead">Master cutting-edge robotics skills with our AI-powered platform, expert mentors, and hands-on projects that prepare you for the future.</p>
+        <div class="hero-buttons">
+            <a href="#courses" class="btn btn-outline-light">
+                Explore Courses <i class="fas fa-search ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="section-heading">
+            <h2>Why Choose BotVortex?</h2>
+            <p>Our platform combines the latest in educational technology with industry expertise to deliver unparalleled learning experiences.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>AI-Powered Learning</h4>
+                    <p>Our adaptive learning system personalizes content based on your progress, strengths, and areas needing improvement.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h4>Virtual Robotics Lab</h4>
+                    <p>Access our browser-based robotics simulator to experiment with concepts before applying them to physical robots.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h4>Real-World Projects</h4>
+                    <p>Build portfolio-worthy projects that solve actual problems, with guidance from industry professionals.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h4>Expert Mentors</h4>
+                    <p>Learn from robotics engineers and researchers who are actively working in the field.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h4>Industry Certifications</h4>
+                    <p>Earn recognized certifications that validate your skills to employers.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Community Support</h4>
+                    <p>Join a global community of robotics enthusiasts to collaborate and grow together.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Roadmap Section -->
+<section id="roadmap" class="py-5">
+    <div class="container py-5">
+        <div class="section-heading">
+            <h2>Your Robotics Learning Journey</h2>
+            <p>Follow our structured path from beginner to advanced robotics engineer with clear milestones and achievements.</p>
+        </div>
+        <div class="roadmap-timeline">
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>Foundation Level</h3>
+                    <ul>
+                        <li>Basic Electronics & Circuits</li>
+                        <li>Introduction to Microcontrollers</li>
+                        <li>Programming Fundamentals (Python/C++)</li>
+                        <li>Simple Robot Assembly</li>
+                        <li>Basic Sensor Integration</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h3>Intermediate Level</h3>
+                    <ul>
+                        <li>Advanced Motor Control</li>
+                        <li>Sensor Fusion Techniques</li>
+                        <li>Robot Kinematics</li>
+                        <li>Basic Computer Vision</li>
+                        <li>Wireless Communication</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h3>Advanced Level</h3>
+                    <ul>
+                        <li>Robot Operating System (ROS)</li>
+                        <li>Autonomous Navigation</li>
+                        <li>SLAM Algorithms</li>
+                        <li>Machine Learning for Robotics</li>
+                        <li>Advanced Control Systems</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h3>Expert Level</h3>
+                    <ul>
+                        <li>Multi-Robot Systems</li>
+                        <li>AI-Powered Robotics</li>
+                        <li>Human-Robot Interaction</li>
+                        <li>Robotics in Industry 4.0</li>
+                        <li>Capstone Project</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Courses Section -->
+<section id="courses" class="py-5 bg-light">
+    <div class="container py-5">
+        <div class="section-heading">
+            <h2>Featured Robotics Courses</h2>
+            <p>Choose from our comprehensive curriculum designed by industry experts and academic leaders.</p>
+        </div>
+        <div class="row g-4">
+            <!-- Course 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="course-card-container">
+                    <div class="course-card">
+                        <div class="course-card-front">
+                            <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9" alt="Intro to Robotics">
+                            <div class="course-card-body">
+                                <h5 class="course-card-title">Introduction to Robotics</h5>
+                                <p class="course-card-text">Learn the fundamentals of robotics including mechanics, electronics, and basic programming.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary badge-level">Beginner</span>
+                                    <span class="text-muted">4 Weeks</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card-back">
+                            <h4>What You'll Learn</h4>
+                            <ul>
+                                <li>Robot components and architecture</li>
+                                <li>Basic electronics for robotics</li>
+                                <li>Simple robot programming</li>
+                                <li>Sensor integration basics</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-white mt-auto">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Course 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="course-card-container">
+                    <div class="course-card">
+                        <div class="course-card-front">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12" alt="Arduino Robotics">
+                            <div class="course-card-body">
+                                <h5 class="course-card-title">Arduino Robotics Projects</h5>
+                                <p class="course-card-text">Build functional robots using Arduino with hands-on projects and real-world applications.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success badge-level">Intermediate</span>
+                                    <span class="text-muted">6 Weeks</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card-back">
+                            <h4>What You'll Learn</h4>
+                            <ul>
+                                <li>Advanced Arduino programming</li>
+                                <li>Motor control systems</li>
+                                <li>Sensor integration techniques</li>
+                                <li>Wireless control implementation</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-white mt-auto">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Course 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="course-card-container">
+                    <div class="course-card">
+                        <div class="course-card-front">
+                            <img src="https://images.unsplash.com/photo-1581093057305-25a0a5b9a0aa" alt="ROS Fundamentals">
+                            <div class="course-card-body">
+                                <h5 class="course-card-title">ROS Fundamentals</h5>
+                                <p class="course-card-text">Master the Robot Operating System (ROS) for advanced robotics development.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-warning badge-level">Advanced</span>
+                                    <span class="text-muted">8 Weeks</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card-back">
+                            <h4>What You'll Learn</h4>
+                            <ul>
+                                <li>ROS architecture and concepts</li>
+                                <li>Creating ROS packages</li>
+                                <li>ROS communication methods</li>
+                                <li>ROS tools and debugging</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-white mt-auto">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Course 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="course-card-container">
+                    <div class="course-card">
+                        <div class="course-card-front">
+                            <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9" alt="Autonomous Robots">
+                            <div class="course-card-body">
+                                <h5 class="course-card-title">Autonomous Mobile Robots</h5>
+                                <p class="course-card-text">Develop robots that can navigate and make decisions autonomously in complex environments.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-warning badge-level">Advanced</span>
+                                    <span class="text-muted">10 Weeks</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card-back">
+                            <h4>What You'll Learn</h4>
+                            <ul>
+                                <li>SLAM algorithms</li>
+                                <li>Path planning techniques</li>
+                                <li>Obstacle avoidance</li>
+                                <li>Sensor fusion methods</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-white mt-auto">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Course 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="course-card-container">
+                    <div class="course-card">
+                        <div class="course-card-front">
+                            <img src="https://images.unsplash.com/photo-1581093057305-25a0a5b9a0aa" alt="AI Robotics">
+                            <div class="course-card-body">
+                                <h5 class="course-card-title">AI for Robotics</h5>
+                                <p class="course-card-text">Combine artificial intelligence with robotics to create intelligent, adaptive systems.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-danger badge-level">Expert</span>
+                                    <span class="text-muted">12 Weeks</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card-back">
+                            <h4>What You'll Learn</h4>
+                            <ul>
+                                <li>Machine learning for robotics</li>
+                                <li>Computer vision integration</li>
+                                <li>Neural networks in robotics</li>
+                                <li>Reinforcement learning</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-white mt-auto">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Course 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="course-card-container">
+                    <div class="course-card">
+                        <div class="course-card-front">
+                            <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9" alt="Industrial Robotics">
+                            <div class="course-card-body">
+                                <h5 class="course-card-title">Industrial Robotics</h5>
+                                <p class="course-card-text">Learn about robotics applications in manufacturing and industrial automation.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success badge-level">Intermediate</span>
+                                    <span class="text-muted">6 Weeks</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card-back">
+                            <h4>What You'll Learn</h4>
+                            <ul>
+                                <li>Industrial robot programming</li>
+                                <li>Automation systems</li>
+                                <li>Safety protocols</li>
+                                <li>Production line integration</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-white mt-auto">Enroll Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <a href="c1.html" class="btn btn-primary-gradient btn-lg">View All Courses <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews Section -->
+<section id="reviews" class="py-5">
+    <div class="container py-5">
+        <div class="section-heading">
+            <h2>What Our Students Say</h2>
+            <p>Hear from robotics enthusiasts who transformed their skills with BotVortex.</p>
+        </div>
+        <div class="row g-4">
+            <!-- Review 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"BotVortex completely transformed my approach to robotics. The hands-on projects gave me the confidence to build my own autonomous robot from scratch. The community support is incredible!"</p>
+                    <div class="review-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Chen">
+                        </div>
+                        <div class="author-info">
+                            <h5>Sarah Chen</h5>
+                            <p>Robotics Engineer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Review 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"The AI for Robotics course was challenging but incredibly rewarding. The instructors provided clear explanations of complex concepts and the virtual lab was a game-changer."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="David Kim">
+                        </div>
+                        <div class="author-info">
+                            <h5>David Kim</h5>
+                            <p>AI Researcher</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Review 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="review-text">"As a complete beginner, I found the Introduction to Robotics course perfectly paced. The interactive simulations helped me grasp concepts I struggled with in textbooks."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Maria Garcia">
+                        </div>
+                        <div class="author-info">
+                            <h5>Maria Garcia</h5>
+                            <p>Engineering Student</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Review 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"The Industrial Robotics course directly contributed to me getting promoted at work. The practical skills I learned are exactly what employers are looking for."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="James Wilson">
+                        </div>
+                        <div class="author-info">
+                            <h5>James Wilson</h5>
+                            <p>Automation Technician</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Review 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="review-text">"The ROS Fundamentals course is the most comprehensive I've found. The instructors break down complex topics into manageable chunks with excellent practical examples."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/54.jpg" alt="Priya Patel">
+                        </div>
+                        <div class="author-info">
+                            <h5>Priya Patel</h5>
+                            <p>Robotics PhD Candidate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Review 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="review-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-text">"What sets BotVortex apart is their focus on real-world applications. The capstone project I completed became the centerpiece of my portfolio and helped me land my dream job."</p>
+                    <div class="review-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Thomas Müller">
+                        </div>
+                        <div class="author-info">
+                            <h5>Thomas Müller</h5>
+                            <p>Robotics Software Engineer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Ready to Launch Your Robotics Journey?</h2>
+        <p>Join thousands of students worldwide who are mastering robotics with our cutting-edge platform.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="#courses" class="btn btn-outline-light btn-lg">
+                Explore Courses <i class="fas fa-search ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <a href="#" class="footer-logo">
+                    <i class="fas fa-robot"></i>BotVortex
+                </a>
+                <p class="footer-about">Empowering the next generation of robotics engineers with cutting-edge education and hands-on learning experiences.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+                <div class="footer-links">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                        <li><a href="#courses"><i class="fas fa-chevron-right"></i> Courses</a></li>
+                        <li><a href="#roadmap"><i class="fas fa-chevron-right"></i> Roadmap</a></li>
+                        <li><a href="#reviews"><i class="fas fa-chevron-right"></i> Reviews</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4 mb-md-0">
+                <div class="footer-links">
+                    <h5>Courses</h5>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Beginner Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Intermediate Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Advanced Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Specializations</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Certification Programs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3">
+                <div class="footer-links">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><a href="mailto:info@botvortex.com"><i class="fas fa-envelope"></i> info@botvortex.com</a></li>
+                        <li><a href="tel:+11234567890"><i class="fas fa-phone"></i> +1 (123) 456-7890</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Robotics Way, Tech City</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Mon-Fri: 9AM - 6PM</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> Support Center</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BotVortex Robotics Education. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL without page reload
+                history.pushState(null, null, targetId);
+            }
+        });
+    });
+
+    // Activate current section in navbar
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    window.addEventListener('scroll', function() {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (pageYOffset >= (sectionTop - 150)) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Initialize particles.js
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        }
+    });
+
+    // Animate elements on scroll
+    const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.feature-card, .course-card-container, .review-card, .timeline-item');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
+            
+            if (elementPosition < screenPosition) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    };
+
+    // Set initial state for animated elements
+    document.querySelectorAll('.feature-card, .course-card-container, .review-card, .timeline-item').forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    });
+
+    // Run animation on load and scroll
+    window.addEventListener('load', animateOnScroll);
+    window.addEventListener('scroll', animateOnScroll);
+</script>
+</body>
+</html>

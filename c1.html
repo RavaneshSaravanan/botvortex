@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robotics Courses – RoboLearn</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary-color: #6c757d;
+      --accent-color: #4cc9f0;
+      --dark-bg: #0f172a;
+      --light-bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-dark: #1e293b;
+      --text-light: #f8fafc;
+      --gradient-primary: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+      --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --box-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      background-color: var(--light-bg);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar.scrolled {
+      background: rgba(67, 97, 238, 0.95) !important;
+    }
+
+    .navbar.scrolled .nav-link {
+      color: var(--text-light) !important;
+    }
+
+    .navbar.scrolled .navbar-brand {
+      color: var(--text-light) !important;
+    }
+
+    .navbar-brand {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      color: var(--primary-color);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand i {
+      color: var(--accent-color);
+      margin-right: 10px;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      margin: 0 10px;
+      padding: 8px 15px !important;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link i {
+      margin-right: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color);
+      background: rgba(67, 97, 238, 0.1);
+    }
+
+    .nav-link:hover i {
+      transform: translateY(-2px);
+    }
+
+    .navbar.scrolled .nav-link:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: 600;
+    }
+
+    .navbar.scrolled .nav-link.active {
+      color: var(--text-light) !important;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Hero Section */
+    .page-hero {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485') center/cover no-repeat;
+      opacity: 0.1;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero-content p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+
+    /* Course Cards */
+    .course-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%;
+      position: relative;
+    }
+
+    .course-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    .course-card-img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .course-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .course-card:hover .course-card-img img {
+      transform: scale(1.05);
+    }
+
+    .course-level {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .beginner {
+      background: rgba(67, 97, 238, 0.9);
+      color: white;
+    }
+
+    .intermediate {
+      background: rgba(40, 167, 69, 0.9);
+      color: white;
+    }
+
+    .advanced {
+      background: rgba(220, 53, 69, 0.9);
+      color: white;
+    }
+
+    .course-card-body {
+      padding: 25px;
+    }
+
+    .course-card-title {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+
+    .course-card-text {
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+    }
+
+    .course-meta span {
+      display: flex;
+      align-items: center;
+    }
+
+    .course-meta i {
+      margin-right: 5px;
+      font-size: 0.9rem;
+    }
+
+    .btn-enroll {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-enroll:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+    }
+
+    .btn-enroll i {
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-enroll:hover i {
+      transform: translateX(3px);
+    }
+
+    /* Filter Section */
+    .filter-section {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 30px;
+    }
+
+    .filter-title {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: var(--text-dark);
+    }
+
+    .filter-group {
+      margin-bottom: 20px;
+    }
+
+    .filter-group h5 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+
+    .form-check-label {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+
+    .btn-filter {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .btn-filter:hover {
+      background: var(--primary-dark);
+      color: white;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--dark-bg);
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    .footer-logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: inline-block;
+      color: white;
+    }
+
+    .footer-logo i {
+      color: var(--accent-color);
+      margin-right: 10px;
+    }
+
+    .footer-about p {
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+
+    .footer-links h5 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-links h5::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--accent-color);
+    }
+
+    .footer-links ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links ul li a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-links ul li a i {
+      margin-right: 10px;
+      font-size: 0.8rem;
+      color: var(--accent-color);
+    }
+
+    .footer-links ul li a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      margin-right: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .footer-social a:hover {
+      background: var(--accent-color);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 30px;
+      margin-top: 30px;
+      text-align: center;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+      
+      .course-card-img {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-robot"></i>BotVortex
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-home"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="c1.html">
+              <i class="fas fa-graduation-cap"></i> Courses
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="roadmap.html">
+              <i class="fas fa-map-marked-alt"></i> Roadmap
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">
+              <i class="fas fa-envelope"></i> Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Robotics Courses</h1>
+        <p>Master robotics from the ground up – from Arduino to AI-powered bots with our comprehensive curriculum</p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="#courses" class="btn btn-light btn-lg">
+            <i class="fas fa-search me-2"></i> Browse Courses
+          </a>
+          <a href="#filter" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-filter me-2"></i> Filter Courses
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section class="py-5" id="filter">
+    <div class="container">
+      <div class="filter-section">
+        <h4 class="filter-title">Find Your Perfect Course</h4>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="filter-group">
+              <h5>Skill Level</h5>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="beginnerCheck" checked>
+                <label class="form-check-label" for="beginnerCheck">Beginner</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="intermediateCheck" checked>
+                <label class="form-check-label" for="intermediateCheck">Intermediate</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="advancedCheck" checked>
+                <label class="form-check-label" for="advancedCheck">Advanced</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="filter-group">
+              <h5>Duration</h5>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="shortCheck">
+                <label class="form-check-label" for="shortCheck">1-3 Weeks</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="mediumCheck" checked>
+                <label class="form-check-label" for="mediumCheck">4-6 Weeks</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="longCheck">
+                <label class="form-check-label" for="longCheck">7+ Weeks</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="filter-group">
+              <h5>Category</h5>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="arduinoCheck" checked>
+                <label class="form-check-label" for="arduinoCheck">Arduino</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rosCheck" checked>
+                <label class="form-check-label" for="rosCheck">ROS</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="aiCheck" checked>
+                <label class="form-check-label" for="aiCheck">AI Robotics</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="filter-group">
+              <h5>Features</h5>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="certificateCheck">
+                <label class="form-check-label" for="certificateCheck">With Certificate</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="projectCheck" checked>
+                <label class="form-check-label" for="projectCheck">Hands-on Projects</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="mentorCheck">
+                <label class="form-check-label" for="mentorCheck">Mentor Support</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-end mt-3">
+          <button class="btn btn-filter">
+            <i class="fas fa-filter me-2"></i> Apply Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses Section -->
+  <section class="py-5 bg-light" id="courses">
+    <div class="container">
+      <div class="row g-4">
+        
+        <!-- Course 1 -->
+        <div class="col-md-4">
+          <div class="course-card">
+            <div class="course-card-img">
+              <img src="images\introduction of robotics.png" alt="Intro to Robotics">
+              <span class="course-level beginner">Beginner</span>
+            </div>
+            <div class="course-card-body">
+              <h5 class="course-card-title">Introduction to Robotics</h5>
+              <p class="course-card-text">Understand the basics of robotics, sensors, actuators, and control systems. Perfect for absolute beginners.</p>
+              <div class="course-meta">
+                <span><i class="fas fa-clock"></i> 3 Weeks</span>
+                <span><i class="fas fa-video"></i> 18 Lectures</span>
+              </div>
+              <a href="prog_1.html" class="btn-enroll">
+                  Start Learning <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Course 2 -->
+        <div class="col-md-4">
+          <div class="course-card">
+            <div class="course-card-img">
+              <img src="images\Arduino Robotics.webp" alt="Arduino Robotics">
+              <span class="course-level beginner">Beginner</span>
+            </div>
+            <div class="course-card-body">
+              <h5 class="course-card-title">Robotics with Arduino</h5>
+              <p class="course-card-text">Build simple robots using Arduino boards and learn embedded programming with hands-on projects.</p>
+              <div class="course-meta">
+                <span><i class="fas fa-clock"></i> 4 Weeks</span>
+                <span><i class="fas fa-video"></i> 24 Lectures</span>
+              </div>
+              <a href="prog_2.html" class="btn-enroll">
+                 Start Learning <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Course 3 -->
+        <div class="col-md-4">
+          <div class="course-card">
+            <div class="course-card-img">
+              <img src="images\advantages-of-line-following-robot-for-kids.webp" alt="Line Following Bot">
+              <span class="course-level intermediate">Intermediate</span>
+            </div>
+            <div class="course-card-body">
+              <h5 class="course-card-title">Line Following & Obstacle Avoidance</h5>
+              <p class="course-card-text">Design robots that can follow paths and avoid obstacles using IR & ultrasonic sensors with real-world applications.</p>
+              <div class="course-meta">
+                <span><i class="fas fa-clock"></i> 5 Weeks</span>
+                <span><i class="fas fa-video"></i> 28 Lectures</span>
+              </div>
+              <a href="prog_3.html" class="btn-enroll">
+                Start Learning <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Course 4 -->
+        <div class="col-md-4">
+          <div class="course-card">
+            <div class="course-card-img">
+              <img src="images\iot.jpg" alt="IoT Robotics">
+              <span class="course-level intermediate">Intermediate</span>
+            </div>
+            <div class="course-card-body">
+              <h5 class="course-card-title">IoT & Robotics Integration</h5>
+              <p class="course-card-text">Learn how to connect your robots to the internet and control them remotely. Explore smart automation concepts.</p>
+              <div class="course-meta">
+                <span><i class="fas fa-clock"></i> 6 Weeks</span>
+                <span><i class="fas fa-video"></i> 32 Lectures</span>
+              </div>
+              <a href="prog_4.html" class="btn-enroll">
+                Start Learning <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Course 5 -->
+        <div class="col-md-4">
+          <div class="course-card">
+            <div class="course-card-img">
+              <img src="images\Autonomous Robotics.jpg" alt="Autonomous Robotics">
+              <span class="course-level advanced">Advanced</span>
+            </div>
+            <div class="course-card-body">
+              <h5 class="course-card-title">Autonomous Navigation & SLAM</h5>
+              <p class="course-card-text">Build self-driving robots that map their environment using sensors and SLAM algorithms. Advanced concepts.</p>
+              <div class="course-meta">
+                <span><i class="fas fa-clock"></i> 8 Weeks</span>
+                <span><i class="fas fa-video"></i> 42 Lectures</span>
+              </div>
+             <a href="prog_5.html" class="btn-enroll">
+                Start Learning <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Course 6 -->
+        <div class="col-md-4">
+          <div class="course-card">
+            <div class="course-card-img">
+              <img src="images\AI-Powered Robotics with ROS.jpg" alt="AI Robotics">
+              <span class="course-level advanced">Advanced</span>
+            </div>
+            <div class="course-card-body">
+              <h5 class="course-card-title">AI-Powered Robotics with ROS</h5>
+              <p class="course-card-text">Use Python, ROS, and deep learning to build intelligent robotic systems. Become an AI robotics expert!</p>
+              <div class="course-meta">
+                <span><i class="fas fa-clock"></i> 8 Weeks</span>
+                <span><i class="fas fa-video"></i> 45 Lectures</span>
+              </div>
+              <a href="prog_6.html" class="btn-enroll">
+                Start Learning <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="text-center mt-5">
+        <button class="btn btn-primary btn-lg">
+          <i class="fas fa-spinner me-2"></i> Load More Courses
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-5 text-white" style="background: var(--dark-bg);">
+    <div class="container text-center">
+      <h2 class="mb-4">Can't Find What You're Looking For?</h2>
+      <p class="lead mb-4">We're constantly adding new courses. Let us know what you'd like to learn!</p>
+      <button class="btn btn-primary-gradient btn-lg">
+        <i class="fas fa-envelope me-2"></i> Request a Course
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <a href="index.html" class="footer-logo">
+                    <i class="fas fa-robot"></i>BotVortex
+                </a>
+                <p class="footer-about">Empowering the next generation of robotics engineers with cutting-edge education and hands-on learning experiences.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+                <div class="footer-links">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="courses.html"><i class="fas fa-chevron-right"></i> Courses</a></li>
+                        <li><a href="roadmap.html"><i class="fas fa-chevron-right"></i> Roadmap</a></li>
+                        <li><a href="instructors.html"><i class="fas fa-chevron-right"></i> Instructors</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4 mb-md-0">
+                <div class="footer-links">
+                    <h5>Courses</h5>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Beginner Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Intermediate Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Advanced Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Specializations</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Certification Programs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3">
+                <div class="footer-links">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><a href="mailto:info@botvortex.com"><i class="fas fa-envelope"></i> info@botvortex.com</a></li>
+                        <li><a href="tel:+11234567890"><i class="fas fa-phone"></i> +1 (123) 456-7890</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Robotics Way, Tech City</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Mon-Fri: 9AM - 6PM</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> Support Center</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BotVortex. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </div>
+</footer>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Filter functionality would be implemented here
+    document.querySelectorAll('.form-check-input').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        // In a real implementation, this would filter the courses
+        console.log('Filter changed:', this.id, this.checked);
+      });
+    });
+
+    // Course card hover animations
+    document.querySelectorAll('.course-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px)';
+        this.style.boxShadow = 'var(--box-shadow-hover)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = 'var(--box-shadow)';
+      });
+    });
+  </script>
+</body>
+</html>

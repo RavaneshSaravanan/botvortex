@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autonomous Navigation & SLAM | RoboLearn</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;       /* Main brand color */
+      --primary-dark: #3a56d4;  /* Darker shade of primary */
+      --secondary: #6c757d;     /* Secondary text color */
+      --accent: #4cc9f0;        /* Accent color for highlights */
+      --dark: #0f172a;          /* Dark text color */
+      --light: #f8f9fa;         /* Light background color */
+      
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      --glass: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      --shadow-hover: 0 15px 30px rgba(67, 97, 238, 0.3);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      background-color: #f9f9f9;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Course Hero Section */
+    .course-hero {
+      background: var(--gradient);
+      color: white;
+      padding: 5rem 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .course-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485') center/cover no-repeat;
+      opacity: 0.1;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .course-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .course-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .course-meta {
+      display: flex;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .meta-item i {
+      color: var(--accent);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn-enroll {
+      background: white;
+      color: var(--primary);
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-enroll:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* SLAM Concepts */
+    .slam-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      height: 100%;
+      border-top: 4px solid var(--accent);
+    }
+
+    .slam-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .slam-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .slam-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    /* Algorithm Visualization */
+    .algorithm-visual {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 2rem 0;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .algo-header {
+      padding: 1.5rem;
+      background: var(--primary);
+      color: white;
+    }
+
+    .algo-content {
+      padding: 1.5rem;
+    }
+
+    .algo-step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    /* Sensor Comparison */
+    .sensor-comparison {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+    }
+
+    .sensor-comparison th {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem;
+      text-align: left;
+    }
+
+    .sensor-comparison td {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sensor-comparison tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .course-title {
+        font-size: 2.2rem;
+      }
+      .course-meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .hero-cta {
+        flex-direction: column;
+      }
+      .algo-step {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Course Hero Section -->
+  <section class="course-hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="course-badge">Advanced Level</span>
+        <h1 class="course-title">Autonomous Navigation & SLAM</h1>
+        <p class="lead">Build self-driving robots that map their environment using sensors and SLAM algorithms. Master advanced robotics concepts.</p>
+        
+        <div class="course-meta">
+          <div class="meta-item">
+            <i class="fas fa-clock"></i>
+            <span>8 Weeks</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-video"></i>
+            <span>42 Lectures</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-project-diagram"></i>
+            <span>5 Complex Projects</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-certificate"></i>
+            <span>Certificate of Completion</span>
+          </div>
+        </div> 
+        <div class="hero-cta">
+          <a href="enroll.html" class="btn-enroll">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Course Content -->
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2 class="mb-4">Course Description</h2>
+        <p>This advanced course dives deep into Simultaneous Localization and Mapping (SLAM) techniques for autonomous robots. You'll learn how to equip robots with the ability to construct maps of unknown environments while simultaneously keeping track of their location within these maps.</p>
+        
+        <p>Through hands-on projects with ROS (Robot Operating System) and real sensors, you'll implement various SLAM algorithms and navigation stacks. By the end, you'll be able to design robots capable of autonomous exploration and navigation in complex, dynamic environments.</p>
+        
+        <h2 class="mt-5 mb-4">Core SLAM Concepts</h2>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="slam-card">
+              <div class="slam-icon">
+                <i class="fas fa-map-marked-alt"></i>
+              </div>
+              <h3 class="slam-title">Mapping Techniques</h3>
+              <p>Learn various approaches to environmental mapping including occupancy grids, feature maps, and topological maps.</p>
+              <ul>
+                <li>Grid-based mapping</li>
+                <li>Feature extraction</li>
+                <li>Map optimization</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="slam-card">
+              <div class="slam-icon">
+                <i class="fas fa-location-arrow"></i>
+              </div>
+              <h3 class="slam-title">Localization</h3>
+              <p>Master probabilistic localization methods including Kalman Filters, Particle Filters, and Monte Carlo Localization.</p>
+              <ul>
+                <li>Probabilistic robotics</li>
+                <li>Sensor fusion</li>
+                <li>Uncertainty modeling</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="slam-card">
+              <div class="slam-icon">
+                <i class="fas fa-route"></i>
+              </div>
+              <h3 class="slam-title">Path Planning</h3>
+              <p>Implement advanced path planning algorithms for autonomous navigation in dynamic environments.</p>
+              <ul>
+                <li>A* and D* algorithms</li>
+                <li>Potential fields</li>
+                <li>Dynamic replanning</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="slam-card">
+              <div class="slam-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3 class="slam-title">Autonomous Decision Making</h3>
+              <p>Develop intelligent behaviors for exploration, obstacle avoidance, and goal-oriented navigation.</p>
+              <ul>
+                <li>Behavior trees</li>
+                <li>State machines</li>
+                <li>Reinforcement learning</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <h2 class="mt-5 mb-4">SLAM Algorithm Walkthrough</h2>
+        <div class="algorithm-visual">
+          <div class="algo-header">
+            <h3 class="mb-0">gmapping Process</h3>
+          </div>
+          <div class="algo-content">
+            <div class="algo-step">
+              <div class="step-number">1</div>
+              <div>
+                <h4>Laser Scan Data Acquisition</h4>
+                <p>The robot collects laser scan data from its environment using LIDAR sensors, measuring distances to surrounding objects.</p>
+              </div>
+            </div>
+            <div class="algo-step">
+              <div class="step-number">2</div>
+              <div>
+                <h4>Odometry Integration</h4>
+                <p>Wheel encoder data is combined with IMU readings to estimate the robot's movement between scans.</p>
+              </div>
+            </div>
+            <div class="algo-step">
+              <div class="step-number">3</div>
+              <div>
+                <h4>Scan Matching</h4>
+                <p>Consecutive laser scans are aligned to correct odometry drift and improve position estimation.</p>
+              </div>
+            </div>
+            <div class="algo-step">
+              <div class="step-number">4</div>
+              <div>
+                <h4>Map Update</h4>
+                <p>The algorithm updates the occupancy grid map with new scan data, marking obstacles and free space.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <h2 class="mt-5 mb-4">Sensor Comparison for SLAM</h2>
+        <table class="sensor-comparison">
+          <thead>
+            <tr>
+              <th>Sensor</th>
+              <th>Range</th>
+              <th>Accuracy</th>
+              <th>Best For</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2D LIDAR</td>
+              <td>Up to 30m</td>
+              <td>±2cm</td>
+              <td>Indoor mapping</td>
+              <td>$$$</td>
+            </tr>
+            <tr>
+              <td>3D LIDAR</td>
+              <td>Up to 100m</td>
+              <td>±3cm</td>
+              <td>Outdoor/3D mapping</td>
+              <td>$$$$$</td>
+            </tr>
+            <tr>
+              <td>Stereo Camera</td>
+              <td>Up to 10m</td>
+              <td>±5cm</td>
+              <td>Visual SLAM</td>
+              <td>$$</td>
+            </tr>
+            <tr>
+              <td>RGB-D Camera</td>
+              <td>Up to 5m</td>
+              <td>±3cm</td>
+              <td>Indoor/object interaction</td>
+              <td>$$</td>
+            </tr>
+            <tr>
+              <td>Ultrasonic Array</td>
+              <td>Up to 4m</td>
+              <td>±10cm</td>
+              <td>Low-cost systems</td>
+              <td>$</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm sticky-top" style="top: 20px;">
+          <div class="card-header text-white" style="background-color: var(--primary);">
+            <h4 class="mb-0">Course Enrollment</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Price:</h5>
+              <span class="h4" style="color: var(--primary);">₹3,999</span>
+            </div>
+            <div class="d-grid gap-2">
+                 <a href="enroll.html" class="btn btn-primary btn-lg py-3 text-decoration-none">
+                  <i class="fas fa-shopping-cart me-2"></i> Enroll Now
+                </a>
+            </div>
+            <hr>
+            <h5>Course Includes:</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 42 video lessons</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 5 advanced projects</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> ROS packages</li>
+              <li class="fas fa-check text-success me-2"></i> Simulation environments</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Certificate of completion</li>
+              <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Expert Q&A support</li>
+            </ul>
+            <hr>
+            <h5>Requirements:</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-laptop text-info me-2"></i> Ubuntu Linux system</li>
+              <li class="mb-2"><i class="fas fa-robot text-info me-2"></i> ROS Noetic installed</li>
+              <li class="mb-2"><i class="fas fa-microchip text-info me-2"></i> LIDAR or depth sensor</li>
+              <li class="mb-2"><i class="fas fa-project-diagram text-info me-2"></i> Mobile robot platform</li>
+              <li class="mb-2"><i class="fas fa-brain text-info me-2"></i> Intermediate robotics knowledge</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="card shadow-sm mt-4">
+          <div class="card-header text-white" style="background-color: var(--accent);">
+            <h4 class="mb-0">Recommended Hardware</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <img src="https://m.media-amazon.com/images/I/61JyKpG4RDL._AC_UF1000,1000_QL80_.jpg" alt="LIDAR" class="rounded me-3" width="60">
+              <div>
+                <h6 class="mb-0">RPLIDAR A1</h6>
+                <small>2D Laser Scanner</small>
+                <p class="mb-0 text-success">$149</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+              <img src="https://m.media-amazon.com/images/I/61+Q6Rh5KVL._AC_UF1000,1000_QL80_.jpg" alt="Robot Kit" class="rounded me-3" width="60">
+              <div>
+                <h6 class="mb-0">TurtleBot3</h6>
+                <small>ROS Mobile Robot</small>
+                <p class="mb-0 text-success">$499</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <img src="https://m.media-amazon.com/images/I/61lY5J6yAbL._AC_UF1000,1000_QL80_.jpg" alt="Depth Camera" class="rounded me-3" width="60">
+              <div>
+                <h6 class="mb-0">Intel RealSense</h6>
+                <small>Depth Camera</small>
+                <p class="mb-0 text-success">$199</p>
+              </div>
+            </div>
+            <button class="btn w-100 mt-3 text-white" style="background-color: var(--accent);">
+              <i class="fas fa-shopping-basket me-2"></i> View All Recommendations
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real-world Applications -->
+  <div class="bg-light py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Industry Applications</h2>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <img src="images\Warehouse Automation page5.jpg" class="card-img-top" alt="Warehouse Robot">
+            <div class="card-body">
+              <h5 class="card-title">Warehouse Automation</h5>
+              <p class="card-text">Autonomous forklifts and transport robots that navigate dynamic warehouse environments.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <img src="images\Autonomous Vehicles.jpeg" class="card-img-top" alt="Autonomous Vehicle">
+            <div class="card-body">
+              <h5 class="card-title">Autonomous Vehicles</h5>
+              <p class="card-text">Self-driving cars that build and update maps of their surroundings in real-time.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <img src="images\Search & Rescue.jpg" class="card-img-top" alt="Search and Rescue">
+            <div class="card-body">
+              <h5 class="card-title">Search & Rescue</h5>
+              <p class="card-text">Robots that map disaster areas to locate survivors in dangerous environments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instructor Section -->
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-md-3 text-center">
+        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Instructor" class="rounded-circle img-thumbnail mb-3" width="150">
+        <div class="d-flex justify-content-center gap-3">
+          <a href="#" class="text-dark"><i class="fab fa-linkedin fa-lg"></i></a>
+          <a href="#" class="text-dark"><i class="fab fa-github fa-lg"></i></a>
+          <a href="#" class="text-dark"><i class="fab fa-twitter fa-lg"></i></a>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <h2>About Your Instructor</h2>
+        <h4 style="color: var(--primary);">Dr. Michael Chen</h4>
+        <p class="text-muted">Autonomous Systems Researcher | 18+ Years Experience</p>
+        <p>Dr. Chen leads the autonomous navigation team at a leading robotics company and has published over 50 papers on SLAM and mobile robotics. He developed navigation algorithms used in Mars rovers and deep-sea exploration vehicles.</p>
+        <p>His teaching focuses on bridging the gap between theoretical SLAM algorithms and practical implementation challenges faced in real-world robotics applications.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final CTA -->
+  <div class="py-5 text-white" style="background-color: var(--primary);">
+    <div class="container text-center">
+      <h2 class="mb-4">Ready to Master Autonomous Navigation?</h2>
+      <p class="lead mb-4">Join professionals advancing their robotics careers with cutting-edge SLAM expertise.</p>
+      <a href="enroll.html" class="btn btn-light btn-lg px-5">
+        <i class="fas fa-robot me-2"></i> Enroll Now
+      </a>
+    </div>
+  </div>
+   <!-- Footer -->
+  <footer class="bg-dark text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <h5 class="mb-4">RoboLearn</h5>
+          <p>Making robotics education accessible to everyone through high-quality, project-based courses.</p>
+          <div class="d-flex gap-3 mt-4">
+            <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-4">Courses</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white-50">Arduino Robotics</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Raspberry Pi</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Drone Programming</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">AI for Robotics</a></li>
+            <li><a href="#" class="text-white-50">All Courses</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-4">Resources</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white-50">Blog</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Tutorials</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Projects</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Community</a></li>
+            <li><a href="#" class="text-white-50">Support</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+          <h5 class="mb-4">Company</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white-50">About Us</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Careers</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Instructors</a></li>
+            <li class="mb-2"><a href="#" class="text-white-50">Contact</a></li>
+            <li><a href="#" class="text-white-50">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <h5 class="mb-4">Contact</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><i class="fas fa-envelope me-2"></i> hello@robolearn.com</li>
+            <li class="mb-2"><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
+            <li><i class="fas fa-map-marker-alt me-2"></i> San Francisco, CA</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4 bg-secondary">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start">
+          <small class="text-white-50">© 2024 RoboLearn. All rights reserved.</small>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <small class="text-white-50">Made with <i class="fas fa-heart text-danger"></i> for robotics enthusiasts</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

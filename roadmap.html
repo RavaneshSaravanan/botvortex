@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robotics Learning Roadmap | BotVortex</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary-color: #6c757d;
+      --accent-color: #4cc9f0;
+      --dark-bg: #0f172a;
+      --light-bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-dark: #1e293b;
+      --text-light: #f8fafc;
+      --gradient-primary: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+      --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --box-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Navbar Styles (same as your courses page) */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar.scrolled {
+      background: rgba(67, 97, 238, 0.95) !important;
+    }
+
+    .navbar.scrolled .nav-link {
+      color: var(--text-light) !important;
+    }
+
+    .navbar.scrolled .navbar-brand {
+      color: var(--text-light) !important;
+    }
+
+    .navbar-brand {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      color: var(--primary-color);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand i {
+      color: var(--accent-color);
+      margin-right: 10px;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      margin: 0 10px;
+      padding: 8px 15px !important;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-link i {
+      margin-right: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color);
+      background: rgba(67, 97, 238, 0.1);
+    }
+
+    .nav-link:hover i {
+      transform: translateY(-2px);
+    }
+
+    .navbar.scrolled .nav-link:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: 600;
+    }
+
+    .navbar.scrolled .nav-link.active {
+      color: var(--text-light) !important;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Roadmap Header (similar to courses page but adjusted) */
+    .roadmap-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 5rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .roadmap-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485') center/cover no-repeat;
+      opacity: 0.1;
+      z-index: 1;
+    }
+
+    .roadmap-header-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .roadmap-header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .roadmap-header p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+
+    /* Roadmap Timeline Styles (from your original design) */
+    .journey-path {
+      position: relative;
+      padding: 4rem 0;
+    }
+
+    .journey-path::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: var(--secondary-color);
+      z-index: 1;
+    }
+
+    .path-node {
+      position: relative;
+      margin-bottom: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .node-content {
+      width: 45%;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow);
+      background: white;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .node-content:hover {
+      transform: translateY(-5px);
+    }
+
+    .path-node:nth-child(odd) .node-content {
+      margin-left: auto;
+    }
+
+    .path-node:nth-child(even) .node-content {
+      margin-right: auto;
+    }
+
+    .node-marker {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      border: 4px solid white;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+    }
+
+    .node-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .node-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--secondary-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .node-title {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .node-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .skill-badge {
+      background: var(--light-bg);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Footer (same as courses page) */
+    .footer {
+      background: var(--dark-bg);
+      color: white;
+      padding: 60px 0 30px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .roadmap-header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .roadmap-header p {
+        font-size: 1.1rem;
+      }
+      
+      .journey-path::before {
+        left: 30px;
+      }
+      
+      .path-node {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .node-content {
+        width: 80%;
+        margin-left: 60px !important;
+      }
+      
+      .node-marker {
+        left: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation (same as courses page) -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-robot"></i>BotVortex
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-home"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="c1.html">
+              <i class="fas fa-graduation-cap"></i> Courses
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="roadmap.html">
+              <i class="fas fa-map-marked-alt"></i> Roadmap
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">
+              <i class="fas fa-envelope"></i> Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Roadmap Header -->
+  <header class="roadmap-header">
+    <div class="roadmap-header-content container">
+      <h1>Your Robotics Learning Journey</h1>
+      <p>Follow our structured path from beginner to advanced robotics engineer with clear milestones and achievements.</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="#timeline" class="btn btn-light btn-lg">
+          <i class="fas fa-arrow-down me-2"></i> View Roadmap
+        </a>
+        <a href="c1.html" class="btn btn-outline-light btn-lg">
+          <i class="fas fa-graduation-cap me-2"></i> Browse Courses
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Roadmap Timeline -->
+  <section class="journey-path container py-5" id="timeline">
+    <!-- Foundation Level -->
+    <div class="path-node">
+      <div class="node-marker"></div>
+      <div class="node-content">
+        <div class="node-header">
+          <div class="node-icon">1</div>
+          <h2 class="node-title">Foundation Level</h2>
+        </div>
+        <p>Build your fundamental knowledge in electronics, programming, and basic robotics concepts.</p>
+        <div class="node-skills">
+          <span class="skill-badge">Basic Electronics</span>
+          <span class="skill-badge">Microcontrollers</span>
+          <span class="skill-badge">Python/C++</span>
+          <span class="skill-badge">Robot Assembly</span>
+          <span class="skill-badge">Sensor Basics</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Intermediate Level -->
+    <div class="path-node">
+      <div class="node-marker"></div>
+      <div class="node-content">
+        <div class="node-header">
+          <div class="node-icon">2</div>
+          <h2 class="node-title">Intermediate Level</h2>
+        </div>
+        <p>Develop more advanced skills in robot control, sensor integration, and basic autonomous functions.</p>
+        <div class="node-skills">
+          <span class="skill-badge">Motor Control</span>
+          <span class="skill-badge">Sensor Fusion</span>
+          <span class="skill-badge">Kinematics</span>
+          <span class="skill-badge">Computer Vision</span>
+          <span class="skill-badge">Wireless Comms</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Advanced Level -->
+    <div class="path-node">
+      <div class="node-marker"></div>
+      <div class="node-content">
+        <div class="node-header">
+          <div class="node-icon">3</div>
+          <h2 class="node-title">Advanced Level</h2>
+        </div>
+        <p>Master professional robotics tools and techniques used in industry and research.</p>
+        <div class="node-skills">
+          <span class="skill-badge">ROS</span>
+          <span class="skill-badge">Autonomous Nav</span>
+          <span class="skill-badge">SLAM</span>
+          <span class="skill-badge">Machine Learning</span>
+          <span class="skill-badge">Control Systems</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Expert Level -->
+    <div class="path-node">
+      <div class="node-marker"></div>
+      <div class="node-content">
+        <div class="node-header">
+          <div class="node-icon">4</div>
+          <h2 class="node-title">Expert Level</h2>
+        </div>
+        <p>Tackle complex robotics challenges and cutting-edge technologies in the field.</p>
+        <div class="node-skills">
+          <span class="skill-badge">Multi-Robot Systems</span>
+          <span class="skill-badge">AI Robotics</span>
+          <span class="skill-badge">HRI</span>
+          <span class="skill-badge">Industry 4.0</span>
+          <span class="skill-badge">Capstone Project</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-5 text-white" style="background: var(--dark-bg);">
+    <div class="container text-center">
+      <h2 class="mb-4">Ready to Start Your Robotics Journey?</h2>
+      <p class="lead mb-4">Join thousands of students who've transformed their careers with our structured learning path.</p>
+      <a href="courses.html" class="btn btn-primary btn-lg">
+        <i class="fas fa-graduation-cap me-2"></i> Explore Courses
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer (same as courses page) -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <a href="index.html" class="footer-logo">
+            <i class="fas fa-robot"></i>BotVortex
+          </a>
+          <p class="footer-about">Empowering the next generation of robotics engineers with cutting-edge education and hands-on learning experiences.</p>
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h5>Quick Links</h5>
+            <ul>
+              <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+              <li><a href="courses.html"><i class="fas fa-chevron-right"></i> Courses</a></li>
+              <li><a href="roadmap.html"><i class="fas fa-chevron-right"></i> Roadmap</a></li>
+              <li><a href="instructors.html"><i class="fas fa-chevron-right"></i> Instructors</a></li>
+              <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-3 mb-4 mb-md-0">
+          <div class="footer-links">
+            <h5>Courses</h5>
+            <ul>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Beginner Courses</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Intermediate Courses</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Advanced Courses</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Specializations</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Certification Programs</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+          <div class="footer-links">
+            <h5>Contact Us</h5>
+            <ul>
+              <li><a href="mailto:info@botvortex.com"><i class="fas fa-envelope"></i> info@botvortex.com</a></li>
+              <li><a href="tel:+11234567890"><i class="fas fa-phone"></i> +1 (123) 456-7890</a></li>
+              <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Robotics Way, Tech City</a></li>
+              <li><a href="#"><i class="fas fa-clock"></i> Mon-Fri: 9AM - 6PM</a></li>
+              <li><a href="#"><i class="fas fa-headset"></i> Support Center</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 BotVortex. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Navbar scroll effect (same as courses page)
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Roadmap item animations
+    document.querySelectorAll('.node-content').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+        this.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+      });
+    });
+  </script>
+</body>
+</html>

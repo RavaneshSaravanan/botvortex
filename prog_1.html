@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to Robotics | RoboLearn</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #6c757d;
+      --accent: #4cc9f0;
+      --dark: #0f172a;
+      --light: #f8f9fa;
+      --gradient: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+      --glass: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      --shadow-hover: 0 15px 30px rgba(67, 97, 238, 0.3);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      background-color: #f9f9f9;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Course Hero Section */
+    .course-hero {
+      background: var(--gradient);
+      color: white;
+      padding: 5rem 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .course-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485') center/cover no-repeat;
+      opacity: 0.1;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .course-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .course-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .course-meta {
+      display: flex;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .meta-item i {
+      color: var(--accent);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn-enroll {
+      background: white;
+      color: var(--primary);
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-enroll:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* Course Content Section */
+    .course-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .course-tabs {
+      display: flex;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 2rem;
+    }
+
+    .tab-btn {
+      padding: 1rem 2rem;
+      background: none;
+      border: none;
+      font-weight: 600;
+      color: var(--secondary);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Overview Tab */
+    .course-description {
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .learning-objectives {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .objectives-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .objectives-list li {
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .objectives-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* Curriculum Tab */
+    .module {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .module-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.5rem 0;
+    }
+
+    .module-title {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .module-toggle {
+      transition: transform 0.3s ease;
+    }
+
+    .module-toggle.collapsed {
+      transform: rotate(-90deg);
+    }
+
+    .lesson-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+
+    .lesson-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lesson-item:last-child {
+      border-bottom: none;
+    }
+
+    .lesson-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+    }
+
+    .lesson-duration {
+      margin-left: auto;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Instructor Section */
+    .instructor-card {
+      display: flex;
+      gap: 2rem;
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .instructor-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .instructor-info h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .instructor-title {
+      color: var(--secondary);
+      margin-bottom: 1rem;
+    }
+
+    .instructor-bio {
+      line-height: 1.7;
+    }
+
+    /* Reviews Section */
+    .review-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .review-author {
+      font-weight: 600;
+    }
+
+    .review-date {
+      color: var(--secondary);
+    }
+
+    .review-rating {
+      color: #ffc107;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Sidebar */
+    .course-sidebar {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 1rem 0;
+    }
+
+    .includes-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+
+    .includes-list li {
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .includes-list li i {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .course-container {
+        flex-direction: column;
+      }
+      .course-sidebar {
+        order: -1;
+        margin-bottom: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .course-title {
+        font-size: 2.2rem;
+      }
+      .course-meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .hero-cta {
+        flex-direction: column;
+      }
+      .instructor-card {
+        flex-direction: column;
+      }
+      .instructor-img {
+        margin: 0 auto 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Course Hero Section -->
+  <section class="course-hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="course-badge">Beginner Level</span>
+        <h1 class="course-title">Introduction to Robotics</h1>
+        <p class="lead">Understand the basics of robotics, sensors, actuators, and control systems. Perfect for absolute beginners.</p>
+        
+        <div class="course-meta">
+          <div class="meta-item">
+            <i class="fas fa-clock"></i>
+            <span>4 Weeks</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-video"></i>
+            <span>24 Lectures</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-certificate"></i>
+            <span>Certificate of Completion</span>
+          </div>
+        </div>
+        
+        <div class="hero-cta">
+          <a href="#" class="btn-enroll">Enroll Now</a>
+          <a href="#" class="btn-outline">
+            <i class="fas fa-play"></i> Preview Course
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Course Content -->
+  <div class="course-container container">
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- Course Tabs -->
+        <div class="course-tabs">
+          <button class="tab-btn active" data-tab="overview">Overview</button>
+          <button class="tab-btn" data-tab="curriculum">Curriculum</button>
+          <button class="tab-btn" data-tab="instructor">Instructor</button>
+          <button class="tab-btn" data-tab="reviews">Reviews</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+          <div class="course-description">
+            <h3>Course Description</h3>
+            <p>This comprehensive introduction to robotics provides beginners with the foundational knowledge needed to understand and work with robotic systems. You'll learn about the core components of robots, including sensors, actuators, and control systems, through a combination of theoretical lessons and hands-on projects.</p>
+            <p>By the end of this course, you'll be able to assemble a simple robot, program basic behaviors, and understand how different components work together to create autonomous systems. No prior experience in robotics or programming is required.</p>
+          </div>
+
+          <div class="learning-objectives">
+            <h3>What You'll Learn</h3>
+            <ul class="objectives-list">
+              <li>Fundamentals of robotics and automation</li>
+              <li>How sensors and actuators work</li>
+              <li>Basic electronic circuits for robotics</li>
+              <li>Introduction to microcontrollers</li>
+              <li>Simple robot assembly techniques</li>
+              <li>Basic programming concepts for robotics</li>
+              <li>Troubleshooting common robotics issues</li>
+              <li>Safety considerations when working with robots</li>
+            </ul>
+          </div>
+
+          <h3>Who This Course Is For</h3>
+          <p>This course is designed for absolute beginners with no prior experience in robotics. It's perfect for:</p>
+          <ul class="objectives-list">
+            <li>Students interested in robotics and automation</li>
+            <li>Hobbyists looking to start building robots</li>
+            <li>Professionals exploring career transitions into robotics</li>
+            <li>Teachers wanting to incorporate robotics into their curriculum</li>
+            <li>Parents helping children learn about robotics</li>
+          </ul>
+        </div>
+
+        <!-- Curriculum Tab -->
+        <div id="curriculum" class="tab-content">
+          <h3>Course Curriculum</h3>
+          
+          <div class="module">
+            <div class="module-header" data-bs-toggle="collapse" data-bs-target="#module1">
+              <h4 class="module-title">Module 1: Robotics Fundamentals</h4>
+              <i class="fas fa-chevron-down module-toggle"></i>
+            </div>
+            <div class="collapse show" id="module1">
+              <ul class="lesson-list">
+                <li class="lesson-item">
+                  <div class="lesson-icon">
+                    <i class="fas fa-play"></i>
+                  </div>
+                  <div class="lesson-info">
+                    <h5>Introduction to Robotics</h5>
+                    <p>What is a robot? Types and applications</p>
+                  </div>
+                  <span class="lesson-duration">15 min</span>
+                </li>
+                <li class="lesson-item">
+                  <div class="lesson-icon">
+                    <i class="fas fa-play"></i>
+                  </div>
+                  <div class="lesson-info">
+                    <h5>Robot Components</h5>
+                    <p>Understanding sensors, actuators, and controllers</p>
+                  </div>
+                  <span class="lesson-duration">22 min</span>
+                </li>
+                <li class="lesson-item">
+                  <div class="lesson-icon">
+                    <i class="fas fa-play"></i>
+                  </div>
+                  <div class="lesson-info">
+                    <h5>Basic Electronics</h5>
+                    <p>Voltage, current, and circuits for robotics</p>
+                  </div>
+                  <span class="lesson-duration">18 min</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="module">
+            <div class="module-header collapsed" data-bs-toggle="collapse" data-bs-target="#module2">
+              <h4 class="module-title">Module 2: Working with Sensors</h4>
+              <i class="fas fa-chevron-down module-toggle"></i>
+            </div>
+            <div class="collapse" id="module2">
+              <ul class="lesson-list">
+                <li class="lesson-item">
+                  <div class="lesson-icon">
+                    <i class="fas fa-play"></i>
+                  </div>
+                  <div class="lesson-info">
+                    <h5>Types of Sensors</h5>
+                    <p>Distance, light, temperature and more</p>
+                  </div>
+                  <span class="lesson-duration">25 min</span>
+                </li>
+                <li class="lesson-item">
+                  <div class="lesson-icon">
+                    <i class="fas fa-play"></i>
+                  </div>
+                  <div class="lesson-info">
+                    <h5>Sensor Integration</h5>
+                    <p>Connecting sensors to microcontrollers</p>
+                  </div>
+                  <span class="lesson-duration">30 min</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Additional modules would go here -->
+        </div>
+
+        <!-- Instructor Tab -->
+        <div id="instructor" class="tab-content">
+          <h3>About the Instructor</h3>
+          <div class="instructor-card">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Sarah Chen" class="instructor-img">
+            <div class="instructor-info">
+              <h3>Dr. Sarah Chen</h3>
+              <p class="instructor-title">Robotics Engineer & Educator</p>
+              <div class="instructor-bio">
+                <p>Dr. Chen has over 15 years of experience in robotics research and education. She holds a PhD in Robotics from MIT and has worked with leading robotics companies including Boston Dynamics and iRobot.</p>
+                <p>As an educator, she has taught robotics to thousands of students worldwide and specializes in making complex concepts accessible to beginners. Her passion is helping people discover the exciting world of robotics.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Tab -->
+        <div id="reviews" class="tab-content">
+          <h3>Student Reviews</h3>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-author">Michael Johnson</span>
+              <span class="review-date">2 weeks ago</span>
+            </div>
+            <div class="review-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p>This course was exactly what I needed to start my robotics journey. The explanations are clear and the hands-on projects really helped solidify the concepts. Dr. Chen is an excellent instructor!</p>
+          </div>
+          
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-author">Emma Rodriguez</span>
+              <span class="review-date">1 month ago</span>
+            </div>
+            <div class="review-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p>As a complete beginner, I was nervous about starting, but the course builds up concepts gradually. The only reason I didn't give 5 stars is that I wish there were more advanced projects at the end.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="course-sidebar">
+          <div class="sidebar-card">
+            <div class="d-flex justify-content-between align-items-center">
+              <h4>Course Includes</h4>
+              <span class="price">₹999</span>
+            </div>
+            <ul class="includes-list">
+              <li>
+                <i class="fas fa-video"></i>
+                <span>24 hours on-demand video</span>
+              </li>
+              <li>
+                <i class="fas fa-file-alt"></i>
+                <span>15 downloadable resources</span>
+              </li>
+              <li>
+                <i class="fas fa-mobile-alt"></i>
+                <span>Access on mobile and TV</span>
+              </li>
+              <li>
+                <i class="fas fa-certificate"></i>
+                <span>Certificate of completion</span>
+              </li>
+              <li>
+                <i class="fas fa-infinity"></i>
+                <span>Full lifetime access</span>
+              </li>
+            </ul>
+            <a href="enroll.html" class="btn btn-primary w-100 py-2">Enroll Now</a>
+          </div>
+
+          <div class="sidebar-card">
+            <h4>Recommended Kits</h4>
+            <p>Enhance your learning with these robotics starter kits:</p>
+            <div class="d-flex align-items-center mb-2">
+              <img src="images\ROBOTICS KIT.jpg" width="150px" height="100px" alt="Starter Kit" class="rounded me-2">
+              <div>
+                <br>
+                <h6 class="mb-0">Robotics Beginner Kit</h6>
+                <small>$1500</small>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <img src="images\Arduino Starter Pack.webp" width="150px" height="100px" alt="Arduino Kit" class="rounded me-2">
+              <div>
+                 <br>
+                <h6 class="mb-0">Arduino Starter Pack</h6>
+                <small>$2000</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Tab functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons and contents
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding content
+        btn.classList.add('active');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Module toggle animation
+    const moduleHeaders = document.querySelectorAll('.module-header');
+    moduleHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const toggle = header.querySelector('.module-toggle');
+        toggle.classList.toggle('collapsed');
+      });
+    });
+  </script>
+</body>
+</html>

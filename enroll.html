@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoboLearn - Enrollment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --robot-red: #ef4444;
+            --tech-teal: #06b6d4;
+            --dark-gray: #1f2937;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+        }
+        
+        .robot-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--tech-teal));
+            color: white;
+        }
+        
+        .step-indicator {
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .step-indicator:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e5e7eb;
+            z-index: 0;
+        }
+        
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+        }
+        
+        .step.active {
+            background: var(--primary-blue);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+        
+        .step.completed {
+            background: var(--tech-teal);
+            color: white;
+        }
+        
+        .step-label {
+            position: absolute;
+            top: 45px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        
+        .form-step {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .qr-scanner-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+        
+        .payment-success-icon {
+            font-size: 5rem;
+            color: #10b981;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+        
+        .btn-robot {
+            background: linear-gradient(135deg, var(--primary-blue), var(--tech-teal));
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+        }
+        
+        .btn-robot:hover {
+            background: linear-gradient(135deg, #1d4ed8, #0891b2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <!-- Header -->
+                    <div class="card-header robot-header py-3">
+                        <h2 class="h4 text-center mb-0">
+                            <i class="fas fa-robot me-2"></i>BotVortex Enrollment
+                        </h2>
+                    </div>
+                    
+                    <!-- Step Indicator -->
+                    <div class="card-body">
+                        <div class="step-indicator d-flex justify-content-between">
+                            <div class="step active" data-step="1">
+                                <span>1</span>
+                                <span class="step-label">Student Info</span>
+                            </div>
+                            <div class="step" data-step="2">
+                                <span>2</span>
+                                <span class="step-label">Payment</span>
+                            </div>
+                            <div class="step" data-step="3">
+                                <span>3</span>
+                                <span class="step-label">Confirm</span>
+                            </div>
+                            <div class="step" data-step="4">
+                                <span>4</span>
+                                <span class="step-label">Terms</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Form Steps -->
+                        <form id="enrollmentForm">
+                            <!-- Step 1: Student Details -->
+                            <div class="form-step active" data-step="1">
+                                <h3 class="h5 mb-4">Student Information</h3>
+                                
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label">Phone</label>
+                                        <input type="tel" class="form-control" id="phone" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="course" class="form-label">Select Course</label>
+                                        <select class="form-select" id="course" required>
+                                            <option value="">Choose...</option>
+                                            <option value="beginner">Introduction to Robotics(₹999)</option>
+                                            <option value="beginner">Robotics with Arduino(₹1,599)</option>
+                                            <option value="intermediate">Line Following & Obstacle Avoidance (₹1,999)</option>
+                                            <option value="intermediate">IoT & Robotics Integration (₹2,999)</option>
+                                            <option value="advanced">Autonomous Navigation & SLAM (₹3,999)</option>
+                                            <option value="advanced">AI-Powered Robotics with ROS (₹4,500)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button type="button" class="btn btn-robot next-step">
+                                        Continue <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2: Payment -->
+                            <div class="form-step" data-step="2">
+                                <h3 class="h5 mb-4">Payment Method</h3>
+                                
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="upi" checked>
+                                        <label class="form-check-label fw-bold" for="upi">
+                                            UPI Payment
+                                        </label>
+                                    </div>
+                                    <div class="mt-3" id="upiFields">
+                                        <div class="qr-scanner-placeholder mb-3">
+                                            <i class="fas fa-qrcode fa-4x mb-3 text-muted"></i>
+                                            <p>Scan this QR code with your UPI app</p>
+                                            <button class="btn btn-sm btn-outline-primary mt-2">
+                                                <i class="fas fa-camera me-2"></i>Open Scanner
+                                            </button>
+                                        </div>
+                                        <p class="text-center text-muted">OR</p>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Enter UPI ID">
+                                            <button class="btn btn-primary" type="button">Verify</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="paymentMethod" id="card">
+                                        <label class="form-check-label fw-bold" for="card">
+                                            Credit/Debit Card
+                                        </label>
+                                    </div>
+                                    <div class="mt-3" id="cardFields" style="display: none;">
+                                        <div class="mb-3">
+                                            <label for="cardNumber" class="form-label">Card Number</label>
+                                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label for="expiry" class="form-label">Expiry Date</label>
+                                                <input type="text" class="form-control" id="expiry" placeholder="MM/YY">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="cvv" class="form-label">CVV</label>
+                                                <input type="text" class="form-control" id="cvv" placeholder="123">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between mt-4">
+                                    <button type="button" class="btn btn-outline-secondary prev-step">
+                                        <i class="fas fa-arrow-left me-2"></i> Back
+                                    </button>
+                                    <button type="button" class="btn btn-robot next-step">
+                                        Continue <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3: Transaction Confirmation -->
+                            <div class="form-step" data-step="3">
+                                <div class="text-center py-4">
+                                    <div class="payment-success-icon mb-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h3 class="h4 mb-3">Payment Successful!</h3>
+                                    <p class="text-muted mb-4">Your enrollment has been confirmed</p>
+                                    
+                                    <div class="card mb-4">
+                                        <div class="card-body text-start">
+                                            <h5 class="card-title mb-3">Transaction Details</h5>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p><strong>Transaction ID:</strong><br> ROBOTXN202308156742</p>
+                                                    <p><strong>Date:</strong><br> August 15, 2023</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><strong>Amount Paid:</strong><br> ₹4,999.00</p>
+                                                    <p><strong>Payment Method:</strong><br> UPI (PhonePe)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between">
+                                        <button type="button" class="btn btn-outline-secondary prev-step">
+                                            <i class="fas fa-arrow-left me-2"></i> Back
+                                        </button>
+                                        <button type="button" class="btn btn-robot next-step">
+                                            Continue <i class="fas fa-arrow-right ms-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 4: Terms and Conditions -->
+                            <div class="form-step" data-step="4">
+                                <h3 class="h5 mb-4">Terms and Conditions</h3>
+                                
+                                <div class="card mb-4" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">BotVortex Enrollment Agreement</h5>
+                                        <h6 class="card-subtitle mb-3 text-muted">Last updated: August 1, 2023</h6>
+                                        
+                                        <h6 class="mt-4">1. Enrollment Terms</h6>
+                                        <p>By enrolling in RoboLearn courses, you agree to attend all scheduled sessions and complete assigned projects. Fees are non-refundable after the first week of classes.</p>
+                                        
+                                        <h6 class="mt-4">2. Code of Conduct</h6>
+                                        <p>Students must maintain respectful behavior in all classes and online forums. Any form of harassment or plagiarism will result in immediate dismissal without refund.</p>
+                                        
+                                        <h6 class="mt-4">3. Equipment Requirements</h6>
+                                        <p>Basic robotics kit is required for all courses. Students are responsible for purchasing their own kits as per the specifications provided.</p>
+                                        
+                                        <h6 class="mt-4">4. Privacy Policy</h6>
+                                        <p>We collect student data for educational purposes only. Your information will never be shared with third parties without consent.</p>
+                                        
+                                        <h6 class="mt-4">5. Certification</h6>
+                                        <p>Certificates are awarded only to students who complete 90% of coursework and pass final assessments.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                    <label class="form-check-label" for="agreeTerms">
+                                        I agree to the terms and conditions above
+                                    </label>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-secondary prev-step">
+                                        <i class="fas fa-arrow-left me-2"></i> Back
+                                    </button>
+                                    <button type="submit" class="btn btn-robot">
+                                        <i class="fas fa-rocket me-2"></i> Start Course
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('enrollmentForm');
+            const steps = document.querySelectorAll('.form-step');
+            const stepIndicators = document.querySelectorAll('.step');
+            const nextButtons = document.querySelectorAll('.next-step');
+            const prevButtons = document.querySelectorAll('.prev-step');
+            const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+            let currentStep = 0;
+            
+            // Initialize form
+            showStep(currentStep);
+            
+            // Payment method toggle
+            paymentMethods.forEach(method => {
+                method.addEventListener('change', function() {
+                    document.getElementById('upiFields').style.display = 
+                        this.id === 'upi' ? 'block' : 'none';
+                    document.getElementById('cardFields').style.display = 
+                        this.id === 'card' ? 'block' : 'none';
+                });
+            });
+            
+            // Next button click handler
+            nextButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (validateStep(currentStep)) {
+                        currentStep++;
+                        showStep(currentStep);
+                        updateStepIndicators();
+                    }
+                });
+            });
+            
+            // Previous button click handler
+            prevButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    currentStep--;
+                    showStep(currentStep);
+                    updateStepIndicators();
+                });
+            });
+            
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Congratulations! You can now access your course.');
+                // Redirect to course page in a real scenario
+                // window.location.href = '/course';
+            });
+            
+            // Show current step
+            function showStep(stepIndex) {
+                steps.forEach((step, index) => {
+                    step.classList.toggle('active', index === stepIndex);
+                });
+            }
+            
+            // Update step indicators
+            function updateStepIndicators() {
+                stepIndicators.forEach((step, index) => {
+                    if (index < currentStep) {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    } else if (index === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+            
+            // Validate current step
+            function validateStep(stepIndex) {
+                let isValid = true;
+                
+                if (stepIndex === 0) {
+                    // Validate student info
+                    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'course'];
+                    requiredFields.forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        if (!field.value.trim()) {
+                            field.classList.add('is-invalid');
+                            isValid = false;
+                        } else {
+                            field.classList.remove('is-invalid');
+                        }
+                    });
+                    
+                    // Email validation
+                    const email = document.getElementById('email');
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                        email.classList.add('is-invalid');
+                        isValid = false;
+                    }
+                }
+                
+                if (stepIndex === 3) {
+                    // Terms agreement validation
+                    const termsCheckbox = document.getElementById('agreeTerms');
+                    if (!termsCheckbox.checked) {
+                        termsCheckbox.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        termsCheckbox.classList.remove('is-invalid');
+                    }
+                }
+                
+                return isValid;
+            }
+        });
+    </script>
+</body>
+</html>
